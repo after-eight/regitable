@@ -186,6 +186,12 @@ This makes it hard to intercept file changes, and to find the right time to issu
 I use `inotifywait` to watch the data directory for changes, and the package does an amazing job.
 But i wished there were at least some "hooks" to interact with `xochitl` directly, as this would make the timing issue much more stable.
 
+### reMarkable Updates
+
+After an OS update on your reMarkable, entware and reGitable will no longer be active, because reMarkable resets everything outside your home directory.
+
+To re-enable both, first run the `entware_reenable.sh` script, and the run `regitable_install.sh` again. Don't worry, it will not overwrite your existing files, but re-install the reGitable service in systemd.
+
 
 
 ## Credits and Links
