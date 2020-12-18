@@ -140,12 +140,15 @@ systemctl stop regitable
 
 
 
-## (TODO) Internals
+## Internals
 
-- how it works, inotify, tickets, debounce
-- git and ssh (sshcommand)
-- timezone
-- flock
+### (TODO) how it works, inotify, tickets, debounce
+
+### (TODO) git and ssh (sshcommand)
+
+### (TODO) timezone
+
+### (TODO) flock
 
 
 
@@ -158,13 +161,23 @@ systemctl stop regitable
 
 
 ### (TODO) Labcoat
+
 (GitLab on Android)
 
-TODO
 
 ### (TODO) VSCode
 
-TODO (how to use with GitLens)
+- how to use with GitLens
+
+
+### (TODO) Labcoat
+
+(GitLab on Android)
+
+
+### (TODO) ConnectBot
+
+(ssh client on Android)
 
 
 
