@@ -1,5 +1,7 @@
 # reGitable - backup your reMarkable using git
 
+
+
 ## Objective
 
 Most of my digital life is stored in a git repository, so the first thing i thought of when i examined my newly arrived reMarkable2: can i install and use git on it?
@@ -14,6 +16,14 @@ The notebook files on the reMarkable are stored in `/home/root/.local/share/rema
 But i was unsure if `xochitl`, or some other service running on the reMarkable, would get upset finding a `.git` directory inside this folder.
 So i decided to make use of the very handy `--work-tree` option to separate the two.
 This way, the data directory stays untouched, and we can place the `.git` directory any place we like.
+
+
+
+## Prerequisites
+
+Before you can install and use `reGitable`, you have to install [reMarkable Entware](https://github.com/evidlo/remarkable_entware)!
+
+The installation is very easy and straight forward, thanks to Evan Widloski at this point.
 
 
 
