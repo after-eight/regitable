@@ -83,6 +83,7 @@ EOF
 
   if [[ $GIT_REMOTE != ""]]; then
     /opt/bin/git --git-dir=$GIT remote add origin $GIT_REMOTE
+    /opt/bin/git --git-dir=$GIT branch --set-upstream-to origin/master
   fi
 
 fi
