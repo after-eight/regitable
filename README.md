@@ -19,12 +19,18 @@ This way, the data directory stays untouched, and we can place the `.git` direct
 
 
 
+<!-- ------------------------------------------------------------------- -->
+
+
 ## Prerequisites
 
 Before you can install and use reGitable, you have to install [reMarkable Entware](https://github.com/evidlo/remarkable_entware)!
 
 The installation is very easy and straight forward, thanks to Evan Widloski at this point.
 
+
+
+<!-- ------------------------------------------------------------------- -->
 
 
 ## Installation
@@ -84,10 +90,8 @@ ssh root@10.11.99.1 ./regitable_install.sh
 
 ## First commit
 
-If you want to issue an initial commit to backup the "status quo", you can issue the following commands.
-If you just want to add new notebooks and changes to existing ones from now on, you can skip this section.
+<!-- ------------------------------------------------------------------- -->
 
-ssh into your device and issue the following commands:
 
 ```
 cd .regitable
@@ -138,6 +142,8 @@ systemctl start regitable
 systemctl stop regitable
 ```
 
+
+<!-- ------------------------------------------------------------------- -->
 
 
 ## Internals
@@ -247,9 +253,8 @@ Any help greatly appreciated.
 (GitLab on Android)
 
 
-### (TODO) VSCode
+<!-- ------------------------------------------------------------------- -->
 
-- how to use with GitLens
 
 
 ### (TODO) Labcoat
@@ -288,6 +293,8 @@ After an OS update on your reMarkable, entware and reGitable will no longer be a
 To re-enable both, first run the `entware_reenable.sh` script, and the run `regitable_install.sh` again. Don't worry, it will not overwrite your existing files, but re-install the reGitable service in systemd.
 
 
+<!-- ------------------------------------------------------------------- -->
+
 
 ## Credits and Links
 
@@ -298,6 +305,8 @@ To re-enable both, first run the `entware_reenable.sh` script, and the run `regi
 - [r/RemarkableTablet on Reddit](https://www.reddit.com/r/RemarkableTablet/)
 - [ssh on reMarkable](https://remarkablewiki.com/tech/ssh)
 
+
+<!-- ------------------------------------------------------------------- -->
 
 
 ## Disclaimer
