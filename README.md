@@ -142,13 +142,95 @@ systemctl stop regitable
 
 ## Internals
 
-### (TODO) how it works, inotify, tickets, debounce
 
-### (TODO) git and ssh (sshcommand)
+### timezone
 
-### (TODO) timezone
+The factory setting for the time-zone in my reMarkable was `UTC`.
+This led to all my timestamps for my commit messages being UTC as well.
 
-### (TODO) flock
+To change the timezone, simply follow the instructions from here: https://remarkablewiki.com/tips/timezone.
+
+In my case, i used the "manual" method:
+
+```
+timedatectl set-timezone CET
+```
+
+
+### how it works, inotify, tickets, debounce
+
+(TODO)
+
+
+### git --git-dir and --work-tree
+
+The notebook files on the reMarkable are stored in `/home/root/.local/share/remarkable/xochitl`, which would also be the place where git would normally place its `.git` folder.
+But i was unsure if `xochitl`, or some other service running on the reMarkable, would get upset finding a `.git` directory inside this folder.
+So i decided to make use of the very handy `--git-dir` and `--work-tree` options to separate the two.
+This way, the data directory stays untouched, and we can place the `.git` directory any place we like.
+
+```
+git --git-dir="/home/root/.regitable/.git"  --work-tree="/home/root/.local/share/remarkable/xochitl" init
+```
+
+
+### git --branch --set-upstream-to origin/master
+
+Before you can push to a remote repository, you have to
+- add a remote
+- specify the upstream
+
+A remote is added via the `git remote add` command, and has to be done in advance.
+As for the upstream, git requires you to specify it on your first push with the `--upstream` option. To avoid this, you can set it in advance using the `--set-upstream-to` option:
+
+```
+git branch --set-upstream-to origin/master
+```
+
+
+### git and ssh (sshcommand)
+
+I had a hard time getting the dropbear ssh client, which is installed on the reMarkable, to work with my remote repository via ssh.
+With openssh, an entry in the `~/.ssh/config` is sufficient to point the client in the right direction.
+To persuade the dropbear client to use my ssh key from within a `git push`, i needed to set the `core.sshCommand` in the git config:
+
+```
+git config core.sshCommand "ssh -i $GBUP/remote.key"
+```
+
+
+### git lfs
+
+Unfortunately, `git-lfs` is not (yet) available via Entware.
+This would definitely help reducing the size of the local repository, by telling it to track `.rm` files.
+
+As an experiment, i downloaded the ARM32 version of git-lfs and copied it to the reMarkable.
+This seems to work just fine.
+The downsides actually are the size of git-lfs itself (around 10 MB), and the fact that the `.gitattributes` file has to reside inside the work-tree, which i want to keep clean.
+
+In addition, my knowledge on how to identify and install dependencies needed by a package like git-lfs is very limited, so i decided to abandon this approach.
+Any help greatly appreciated.
+
+
+### flock
+
+(TODO)
+
+
+### inotifywait
+
+(TODO)
+
+
+### dropbearkey
+
+(TODO)
+
+
+### systemd
+
+(TODO)
+
 
 
 
