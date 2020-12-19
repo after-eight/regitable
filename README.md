@@ -13,7 +13,7 @@ Plus, the filenames are immutable uuids, so even if you rename a notebook or mov
 And even though they are binary: unless you do heavy cut-and-paste operations, their content changes in a way that git can handle efficiently.
 
 By pushing changes to a remote repository instantly, i do not only have a backup of all my notebooks in the cloud.
-The repository contains all the back-versions of my files, and should i need to return to a long ago previous stage of a file, or recover a deleted file, i can simply check it out of my repository and re-upload it onto my remarkable.
+The repository contains all the back-versions of my files, and should i need to return to a long ago previous stage of a file, or recover a deleted file, i can simply check it out of my repository and re-upload it onto my reMarkable.
 
 If you're a little paranoid like me, simply install a privately hosted GitLab instance, and all your files are completely under your control.
 
@@ -108,7 +108,7 @@ ssh-rsa AAAAB3NzaC1yc2EAA.....
 To issue these commands, ssh into your device.
 
 
-## known_hosts
+### known_hosts
 
 If you want to use a remote server, eg GitHub, you have to populate the `known_hosts` file before you can push. Issue the command
 ```
@@ -118,7 +118,7 @@ and confirm the signature/fingerprint.
 This has to be done only once, see explanation below in `Issues`.
 
 
-## First commit
+### First commit
 
 You should add and commit the "status quo" of your files like so:
 
@@ -218,6 +218,7 @@ git --git-dir="/home/root/.regitable/.git"  --work-tree="/home/root/.local/share
 ### git --branch --set-upstream-to origin/master
 
 Before you can push to a remote repository, you have to
+
 - add a remote
 - specify the upstream
 
@@ -243,11 +244,11 @@ git config core.sshCommand "ssh -i $GBUP/remote.key"
 ### git lfs
 
 Unfortunately, `git-lfs` is not (yet) available via Entware.
-This would definitely help reducing the size of the local repository, by telling it to track `.rm` files.
+This would definitely help reduce the size of the local repository, by telling it to track `.rm` files.
 
-As an experiment, i downloaded the ARM32 version of git-lfs and copied it to the reMarkable.
+As an experiment, i downloaded the arm-version of `git-lfs` and copied it to the reMarkable.
 This seems to work just fine.
-The downsides actually are the size of git-lfs itself (around 10 MB), and the fact that the `.gitattributes` file has to reside inside the work-tree, which i want to keep clean.
+The downsides actually are the size of `git-lfs` itself (around 10 MB), and the fact that the `.gitattributes` file has to reside inside the work-tree, which i want to keep clean.
 
 In addition, my knowledge on how to identify and install dependencies needed by a package like git-lfs is very limited, so i decided to abandon this approach.
 Any help greatly appreciated.
