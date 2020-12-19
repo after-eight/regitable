@@ -31,6 +31,12 @@ set -e
 
 
 # ----------------------------------------------
+# check for existing config, load if found
+# ----------------------------------------------
+[ -f $GBUP/config.sh ] && source $GBUP/config.sh
+
+
+# ----------------------------------------------
 # check for entware, stop if not installed
 # ----------------------------------------------
 if [ ! -f /opt/bin/opkg ]; then
