@@ -1,6 +1,6 @@
 # reGitable - backup your reMarkable using git
 
-
+# [<img src="regitable.png"></p>](https://github.com/after-eight/regitable)
 
 ## Objective
 
