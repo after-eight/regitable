@@ -103,23 +103,48 @@ ssh-rsa AAAAB3NzaC1yc2EAA.....
 <!-- ------------------------------------------------------------------- -->
 
 
+## Usage
+
+To issue these commands, ssh into your device.
+
+
+## known_hosts
+
+If you want to use a remote server, eg GitHub, you have to populate the `known_hosts` file before you can push. Issue the command
 ```
-cd .regitable
+ssh github.com
+```
+and confirm the signature/fingerprint.
+This has to be done only once, see explanation below in `Issues`.
+
+
+## First commit
+
+You should add and commit the "status quo" of your files like so:
+
+```
+cd ~/.regitable
 git add -A .
 git commit -m "initial commit"
 ```
 
-If you have a remote configured:
+If you have a remote configured and already uploaded your public ssh key:
 
 ```
 git push
 ```
 
 
+### run via command line
 
-## Usage
+You can start the script by executing
+```
+./monitor.sh
+```
+Go ahead and edit some files, to watch the script do its work.
+When exiting the ssh session, the script will stop.
+So you should enable the script as a service, see below.
 
-To issue these commands, ssh into your device.
 
 ### reload service files
 
