@@ -273,19 +273,34 @@ Any help greatly appreciated.
 (TODO)
 
 
+<!-- ------------------------------------------------------------------- -->
 
 
 ## Tools
 
-### (TODO) GitHub / GitLab
+### GitHub / GitLab
 
 - hosted / on premise (GitLab)
 - CI/CD, pipelines, pages
 
+(TODO)
 
-### (TODO) Labcoat
 
-(GitLab on Android)
+### VSCode
+
+- how to use with GitLens
+
+(TODO)
+
+
+### Labcoat (GitLab on Android)
+
+(TODO)
+
+
+### ConnectBot (ssh client on Android)
+
+(TODO)
 
 
 <!-- ------------------------------------------------------------------- -->
