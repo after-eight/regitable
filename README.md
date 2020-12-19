@@ -42,7 +42,7 @@ To increase privacy, you can use an on-premise GitLab installation.
 
 ## Installation
 
-On your host machine, clone the repository:
+On your host machine, clone this repository:
 
 ```
 git clone https://github.com/after-eight/regitable.git
@@ -59,7 +59,7 @@ If you just want to track your files locally without pushing to a remote reposit
 # ----------------------------------------------
 GIT_USER="my-name"
 GIT_EMAIL="my-email@my-domain.com"
-GIT_REMOTE="git@github.com:my-github-name/my-githup-repo.git"
+GIT_REMOTE="git@github.com:my-github-name/my-github-repo.git"
 
 # ----------------------------------------------
 # environment
@@ -93,9 +93,12 @@ Run the install script:
 ssh root@10.11.99.1 ./regitable_install.sh
 ```
 
+To authenticate your reMarkable against a remote git repository, you have to add the public ssh key displayed at the end of the installation to your user profile on the server.
 
+```
+ssh-rsa AAAAB3NzaC1yc2EAA.....
+```
 
-## First commit
 
 <!-- ------------------------------------------------------------------- -->
 
