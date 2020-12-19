@@ -5,7 +5,7 @@
 # ----------------------------------------------
 GIT_USER="my-name"
 GIT_EMAIL="my-email@my-domain.com"
-GIT_REMOTE="git@github.com:my-github-name/my-githup-repo.git"
+GIT_REMOTE="git@github.com:my-github-name/my-github-repo.git"
 
 # ----------------------------------------------
 # environment
