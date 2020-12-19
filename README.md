@@ -21,7 +21,7 @@ This way, the data directory stays untouched, and we can place the `.git` direct
 
 ## Prerequisites
 
-Before you can install and use `reGitable`, you have to install [reMarkable Entware](https://github.com/evidlo/remarkable_entware)!
+Before you can install and use reGitable, you have to install [reMarkable Entware](https://github.com/evidlo/remarkable_entware)!
 
 The installation is very easy and straight forward, thanks to Evan Widloski at this point.
 
