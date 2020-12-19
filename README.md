@@ -306,19 +306,30 @@ Any help greatly appreciated.
 <!-- ------------------------------------------------------------------- -->
 
 
+## Issues / Caveats / Limitations
 
-### (TODO) Labcoat
+### known_hosts
 
-(GitLab on Android)
+Every ssh connection will validate the signature provided by the server against its entries in `known_hosts`, unless you suppress that behaviour (which i do not recommend).
 
+Unfortunately, the `ssh-keyscan` command is not available on the reMarkable, that would help getting the key in advance:
+```
+ssh-keyscan -t ecdsa gitlab.com
+```
 
-### (TODO) ConnectBot
+When connecting to a ssh server the first time, the signature is not available in the `known_hosts`.
+You have to manually confirm it.
 
-(ssh client on Android)
+Whatever server you use, eg GitHub, just issue the command
 
+```
+ssh github.com
+```
 
+and confirm the signature.
+It's irrelevant if we do not yet have a valid ssh key to login, and wie didn't even specify a user.
+This is just to populate the `known_hosts` file.
 
-## Caveats / Limitations
 
 ### Memory
 
@@ -329,12 +340,14 @@ Plus the additionally needed packages from `entware`, `inotifywait` and of cours
 Even though i experimented with the device quite excessively: created tons of notebooks, scribbled around, added and deleted pages, renamed, moved and trashed them, my repo size is still far below `40 MB`.
 The reMarkable is equipped with `8 GB` of storage, but only time can tell if there will be any memory shortages.
 
+
 ### Integration
 
 The folks at reMarkable seem to be quite open-source friendly, but unfortunately their main application `xochitl` is closed source.
 This makes it hard to intercept file changes, and to find the right time to issue a `git add/git commit`.
 I use `inotifywait` to watch the data directory for changes, and the package does an amazing job.
 But i wished there were at least some "hooks" to interact with `xochitl` directly, as this would make the timing issue much more stable.
+
 
 ### reMarkable Updates
 
