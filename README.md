@@ -23,10 +23,18 @@ If you're a little paranoid like me, simply install a privately hosted GitLab in
 
 ## Prerequisites
 
+### Entware
+
 Before you can install and use reGitable, you have to install [reMarkable Entware](https://github.com/evidlo/remarkable_entware)!
 
 The installation is very easy and straight forward, thanks to Evan Widloski at this point.
 
+
+### Remote Repository
+
+Both GitHub and GitLab offer private repos for free, which is the easiest way to get started. Simply create a new repository (leave it empty, do not create a `README.md` file), upload the public ssh key that is created for you during the installation of reGitable, and you are ready to go.
+
+To increase privacy, you can use an on-premise GitLab installation.
 
 
 <!-- ------------------------------------------------------------------- -->
