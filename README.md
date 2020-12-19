@@ -12,11 +12,10 @@ Plus, the filenames are immutable uuids, so even if you rename a notebook or mov
 `.rm` files don't grow _that_ large, because it's one file per page.
 And even though they are binary: unless you do heavy cut-and-paste operations, their content changes in a way that git can handle efficiently.
 
-The notebook files on the reMarkable are stored in `/home/root/.local/share/remarkable/xochitl`, which would also be the place where git would normally place its `.git` folder.
-But i was unsure if `xochitl`, or some other service running on the reMarkable, would get upset finding a `.git` directory inside this folder.
-So i decided to make use of the very handy `--work-tree` option to separate the two.
-This way, the data directory stays untouched, and we can place the `.git` directory any place we like.
+By pushing changes to a remote repository instantly, i do not only have a backup of all my notebooks in the cloud.
+The repository contains all the back-versions of my files, and should i need to return to a long ago previous stage of a file, or recover a deleted file, i can simply check it out of my repository and re-upload it onto my remarkable.
 
+If you're a little paranoid like me, simply install a privately hosted GitLab instance, and all your files are completely under your control.
 
 
 <!-- ------------------------------------------------------------------- -->
