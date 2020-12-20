@@ -4,7 +4,7 @@
 
 ## Objective
 
-Most of my digital life is stored in a git repository, so the first thing i thought of when i examined my newly arrived reMarkable2: can i install and use git on it?
+Most of my digital life is stored in a git repository, so the first thing i thought of when i examined my newly arrived reMarkable2 was: can i install and use git on it?
 
 The filesystem layout of the reMarkable meets the requirements for a git repository pretty well.
 Besides the binary `.rm` files, all other files are more or less json-formatted text files.
@@ -13,7 +13,7 @@ Plus, the filenames are immutable uuids, so even if you rename a notebook or mov
 And even though they are binary: unless you do heavy cut-and-paste operations, their content changes in a way that git can handle efficiently.
 
 By pushing changes to a remote repository instantly, i do not only have a backup of all my notebooks in the cloud.
-The repository contains all the back-versions of my files, and should i need to return to a long ago previous stage of a file, or recover a deleted file, i can simply check it out of my repository and re-upload it onto my reMarkable.
+The repository contains all the back-versions of my files, and should i need to return to a long ago previous version of a file, or recover a deleted file, i can simply check it out of my repository and re-upload it onto my reMarkable.
 
 If you're a little paranoid like me, simply install a privately hosted GitLab instance, and all your files are completely under your control.
 
