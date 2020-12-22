@@ -1,7 +1,10 @@
 #!/bin/bash
 
-SCRIPT=$(dirname $(realpath -s $0))
-source $SCRIPT/config
+# ----------------------------------------------
+# get current dir and source config
+# ----------------------------------------------
+DIR=$(dirname $(realpath -s $0))
+source $DIR/config
 
 
 # ----------------------------------------------
