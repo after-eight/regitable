@@ -1,27 +1,7 @@
 #!/bin/bash
 
-# ----------------------------------------------
-# personal
-# ----------------------------------------------
-GIT_USER="my-name"
-GIT_EMAIL="my-email@my-domain.com"
-GIT_REMOTE="git@github.com:my-github-name/my-github-repo.git"
-
-# ----------------------------------------------
-# environment
-# ----------------------------------------------
-HOME="/home/root"
-WORK="$HOME/.local/share"
-DATA="$WORK/remarkable/xochitl"
-
-GBUP="$HOME/.regitable"
-GIT="$GBUP/.git"
-TICKET="$GBUP/ticket"
-
-SERVICE="regitable"
-
-GIT_LOCKFILE="$GBUP/git.lock"
-TICKET_LOCKFILE="$GBUP/ticket.lock"
+SCRIPT=$(dirname $(realpath -s $0))
+source $SCRIPT/config.sh
 
 
 # ----------------------------------------------

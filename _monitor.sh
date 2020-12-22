@@ -1,3 +1,5 @@
+SCRIPT=$(dirname $(realpath -s $0))
+source $SCRIPT/config.sh
 
 if [[ $GBUP == "" ]]; then
   echo "Environment variables are missing! Make sure this file was created"
