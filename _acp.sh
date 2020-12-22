@@ -1,6 +1,9 @@
 SCRIPT=$(dirname $(realpath -s $0))
 source $SCRIPT/config
 
+exec {GIT_LOCK}>$GIT_LOCKFILE
+exec {TICKET_LOCK}>$TICKET_LOCKFILE
+
 function git_commit() {
   uuid=$1
   date_now=$(printf '%(%F %T)T' $date)

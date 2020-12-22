@@ -1,12 +1,7 @@
 SCRIPT=$(dirname $(realpath -s $0))
 source $SCRIPT/config
 
-if [[ $GBUP == "" ]]; then
-  echo "Environment variables are missing! Make sure this file was created"
-  echo "through the 'gbup_install.sh' script. It will make sure the config.sh"
-  echo "file is present, and is included via source config.sh"
-  exit 1
-fi
+exec {TICKET_LOCK}>$TICKET_LOCKFILE
 
 /opt/bin/inotifywait -m -q --format '%f' -e DELETE $DATA | \
 while read FILE
