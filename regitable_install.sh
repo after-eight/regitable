@@ -28,8 +28,11 @@ fi
 # ----------------------------------------------
 # check entware packages, install if needed
 # ----------------------------------------------
-[ ! -f /opt/bin/inotifywait ] && /opt/bin/opkg install inotifywait
-[ ! -f /opt/bin/git ] && /opt/bin/opkg install git
+[ ! -f /opt/bin/inotifywait ] && opkg install inotifywait
+[ ! -f /opt/bin/git ] && opkg install git
+
+
+# ----------------------------------------------
 
 
 # ----------------------------------------------
