@@ -27,6 +27,22 @@ fi
 
 
 # ----------------------------------------------
+# check script files, EXIT if missing
+# ----------------------------------------------
+if [ ! -f $GBUP/monitor.sh ]; then
+  echo "ERROR: missing monitor.sh"
+  exit 1
+fi
+chmod +x $GBUP/monitor.sh
+
+if [ ! -f $GBUP/acp.sh ]; then
+  echo "ERROR: missing acp.sh"
+  exit 1
+fi
+chmod +x $GBUP/acp.sh
+
+
+# ----------------------------------------------
 # check entware packages, install if needed
 # ----------------------------------------------
 [ ! -f /opt/bin/inotifywait ] && opkg install inotifywait
