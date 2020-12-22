@@ -67,12 +67,9 @@ EOF
 
   /opt/bin/git --git-dir=$GIT config core.sshCommand "ssh -i $GBUP/remote.key"
 
-  if [[ $GIT_REMOTE != ""]]; then
-    /opt/bin/git --git-dir=$GIT remote add origin $GIT_REMOTE
-    /opt/bin/git --git-dir=$GIT branch --set-upstream-to origin/master
+  if [[ $GIT_REMOTE ]]; then
+    git remote add origin $GIT_REMOTE
   fi
-
-fi
 
 
 # ----------------------------------------------
