@@ -83,7 +83,7 @@ chmod +x $GBUP/acp.sh
 # ----------------------------------------------
 # check git-lfs package, install if needed
 # ----------------------------------------------
-[ ! -f /opt/bin/git-lfs ]; then
+if [ ! -f /opt/bin/git-lfs ]; then
   echo "Installing git-lfs...this may take a while..."
   curl -s https://api.github.com/repos/git-lfs/git-lfs/releases/latest \
   | grep "browser_download_url.*-arm-" \
