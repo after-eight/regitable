@@ -17,11 +17,12 @@ set -e
 
 
 # ----------------------------------------------
-# check for entware, stop if not installed
+# check for entware, EXIT if not installed
 # ----------------------------------------------
 if [ ! -f /opt/bin/opkg ]; then
-  echo "Install entware for reMarkable first: https://github.com/Evidlo/remarkable_entware"
-  exit
+  echo "ERROR: missing Entware for reMarkable."
+  echo "Install from here: https://github.com/Evidlo/remarkable_entware"
+  exit 1
 fi
 
 
