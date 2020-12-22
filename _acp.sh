@@ -43,8 +43,8 @@ function git_commit() {
 }
 
 function git_push() {
-  if [[ $GIT_REMOTE != "" ]]; then
-    committed=$(/opt/bin/git --git-dir=$GIT log origin/master..master --name-only | wc -l)
+  if (( $(git remote | wc -l) > 0 )); then
+    committed=$(git log origin/master..master --name-only | wc -l)
 
     if (( $committed > 0 )); then
 
