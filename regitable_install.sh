@@ -14,9 +14,37 @@ set -e
 
 
 # ----------------------------------------------
-# check for existing config, load if found
+# heredoc a few variables to make code more readable
 # ----------------------------------------------
-[ -f $GBUP/config.sh ] && source $GBUP/config.sh
+_attributes=$(cat << EOF
+*.rm filter=lfs diff=lfs merge=lfs -text
+*.jpg filter=lfs diff=lfs merge=lfs -text
+*.pdf filter=lfs diff=lfs merge=lfs -text
+*.epub filter=lfs diff=lfs merge=lfs -text
+EOF
+)
+
+_exclude=$(cat << EOF
+*.lock
+*.zip
+*.uploading
+*.tmp
+*.temp
+EOF
+)
+
+_service=$(cat << EOF
+[Unit]
+Description=reGitable
+After=home.mount opt.mount
+
+[Service]
+ExecStart=$GBUP/monitor.sh
+
+[Install]
+WantedBy=multi-user.target
+EOF
+)
 
 
 # ----------------------------------------------
