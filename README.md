@@ -7,15 +7,19 @@
 Most of my digital life is stored in a git repository, so the first thing i thought of when i examined my newly arrived reMarkable2 was: can i install and use git on it?
 
 The filesystem layout of the reMarkable meets the requirements for a git repository pretty well.
-Besides the binary `.rm` files, all other files are more or less json-formatted text files.
+Besides the binary `.rm` and `.jpg` files, all other files are more or less json-formatted text files.
 Plus, the filenames are immutable uuids, so even if you rename a notebook or move it from one folder to another, all that changes is the `parent` entry in the `.metadata` file.
-`.rm` files don't grow _that_ large, because it's one file per page.
-And even though they are binary: unless you do heavy cut-and-paste operations, their content changes in a way that git can handle efficiently.
+
+Even though the `.jpg` files are tiny, because they get compressed really hard and with low quality, and the `.rm` files don't grow _that_ large because they're one file per page, yet i decided to go the git-lfs route. The setup is a bit more complex, but most of the work is done by the install script anyways, and the result is absolutely worth it.
 
 By pushing changes to a remote repository instantly, i do not only have a backup of all my notebooks in the cloud.
-The repository contains all the back-versions of my files, and should i need to return to a long ago previous version of a file, or recover a deleted file, i can simply check it out of my repository and re-upload it onto my reMarkable.
+The repository contains all the back-versions of my files, and should i need to return to a long ago previous version of a file, or have to recover a deleted file, i can simply check it out of my repository and re-upload it onto my reMarkable.
 
 If you're a little paranoid like me, simply install a privately hosted GitLab instance, and all your files are completely under your control.
+
+Though git of course knows push as well as pull operations in all repositories, i use this solution as a "one way street" (aka backup).
+I only do pushes from the reMarkable, never pull.
+All other clients should only be used to pull, never push.
 
 
 <!-- ------------------------------------------------------------------- -->
