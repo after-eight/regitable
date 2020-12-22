@@ -10,7 +10,7 @@ function git_commit() {
 
   if [[ $uuid == "trash" ]]; then
 
-    /opt/bin/git --git-dir=$GIT add `/opt/bin/git --git-dir=$GIT ls-files --deleted`
+    git add `git ls-files --deleted`
 
     message="$date_now - trash"
 
@@ -31,14 +31,14 @@ function git_commit() {
 
       message="$date_now - $visibleName - m:$date_mod"
 
-      /opt/bin/git --git-dir=$GIT add "*/$uuid*"
+      git add "*/$uuid*"
     fi
   fi
 
-  staged=$(/opt/bin/git --git-dir=$GIT diff --staged --name-only | wc -l)
+  staged=$(git diff --staged --name-only | wc -l)
 
   if (( $staged > 0 )); then
-    /opt/bin/git --git-dir=$GIT commit -q -m "$message"
+    git commit -q -m "$message"
   fi
 }
 
@@ -49,7 +49,7 @@ function git_push() {
     if (( $committed > 0 )); then
 
       if ping -q -c 1 -W 1 8.8.8.8 >/dev/null; then
-        /opt/bin/git --git-dir=$GIT push -q
+        git push -q
       fi
     fi
   fi

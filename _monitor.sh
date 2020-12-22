@@ -3,7 +3,7 @@ source $SCRIPT/config
 
 exec {TICKET_LOCK}>$TICKET_LOCKFILE
 
-/opt/bin/inotifywait -m -q --format '%f' -e DELETE $DATA | \
+inotifywait -m -q --format '%f' -e DELETE $DATA | \
 while read FILE
 do
   uuid=""
