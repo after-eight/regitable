@@ -101,15 +101,7 @@ fi
 # ----------------------------------------------
 # check reGitable directories, create if neeeded
 # ----------------------------------------------
-[ ! -d $GBUP ] && mkdir $GBUP
 [ ! -d $TICKET ] && mkdir $TICKET
-
-
-# ----------------------------------------------
-# check remote ssh key, create if neeeded
-# ----------------------------------------------
-[ ! -f $GBUP/remote.key ] && \
-  dropbearkey -t rsa -f $GBUP/remote.key | grep "^ssh-rsa" > $GBUP/remote.key.pub
 
 
 # ----------------------------------------------
@@ -118,34 +110,29 @@ fi
 if [ ! -d $GIT ]; then
 
   git --git-dir=$GIT --work-tree=$WORK init
-
   git lfs install --local --skip-smudge
 
   git config user.name "$GIT_USER"
   git config user.email "$GIT_EMAIL"
-
   git config core.sshCommand "ssh -i $GBUP/remote.key"
 
   echo "$_exclude" > $GIT/info/exclude
   echo "$_attributes" > $GIT/info/attributes
 fi
 
-  cat > $GIT/info/exclude <<EOF
-*.lock
-*.zip
-*.uploading
-*.tmp
-*.temp
-EOF
-
-  cat > $GIT/info/attributes <<EOF
-*.rm filter=lfs diff=lfs merge=lfs -text
-*.jpg filter=lfs diff=lfs merge=lfs -text
-*.pdf filter=lfs diff=lfs merge=lfs -text
-*.epub filter=lfs diff=lfs merge=lfs -text
-EOF
-
+# ----------------------------------------------
+# check for GIT_REMOTE
+# ----------------------------------------------
+if [[ $GIT_REMOTE ]] && [[ ! $(git remote) ]]; then
+  git remote add origin $GIT_REMOTE
 fi
+
+
+# ----------------------------------------------
+# check remote ssh key, create if neeeded
+# ----------------------------------------------
+[ ! -f $GBUP/remote.key ] && \
+  dropbearkey -t rsa -f $GBUP/remote.key | grep "^ssh-rsa" > $GBUP/remote.key.pub
 
 
 # ----------------------------------------------
