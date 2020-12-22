@@ -51,6 +51,8 @@ function git_push() {
       if ping -q -c 1 -W 1 8.8.8.8 >/dev/null; then
         git push -q
       fi
+
+      git lfs prune
     fi
   fi
 }
