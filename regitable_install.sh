@@ -126,9 +126,9 @@ if [ ! -d $GIT ]; then
 
   git config core.sshCommand "ssh -i $GBUP/remote.key"
 
-  if [[ $GIT_REMOTE ]]; then
-    git remote add origin $GIT_REMOTE
-  fi
+  echo "$_exclude" > $GIT/info/exclude
+  echo "$_attributes" > $GIT/info/attributes
+fi
 
   cat > $GIT/info/exclude <<EOF
 *.lock
@@ -152,19 +152,7 @@ fi
 # check reGitable service file, create if needed
 # ----------------------------------------------
 if [ ! -f /etc/systemd/system/$SERVICE.service ]; then
-
-  cat >/etc/systemd/system/$SERVICE.service <<EOF
-[Unit]
-Description=reGitable
-After=home.mount opt.mount
-
-[Service]
-ExecStart=$GBUP/monitor.sh
-
-[Install]
-WantedBy=multi-user.target
-EOF
-
+  echo "$_service" > /etc/systemd/system/$SERVICE.service
 fi
 
 
