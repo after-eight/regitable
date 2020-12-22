@@ -85,81 +85,35 @@ fi
 # check .git directory, init repo if neeeded
 # ----------------------------------------------
 if [ ! -d $GIT ]; then
-  /opt/bin/git --git-dir=$GIT --work-tree $WORK init
 
-  /opt/bin/git --git-dir=$GIT config user.name "$GIT_USER"
-  /opt/bin/git --git-dir=$GIT config user.email "$GIT_EMAIL"
+  git --git-dir=$GIT --work-tree=$WORK init
 
-  cat >>$GIT/info/exclude <<EOF
-*.lock
-*.zip
-*.uploading
-*.tmp
-*.temp
-*.pdf
-*.epub
-EOF
+  git lfs install --local --skip-smudge
 
-  /opt/bin/git --git-dir=$GIT config core.sshCommand "ssh -i $GBUP/remote.key"
+  git config user.name "$GIT_USER"
+  git config user.email "$GIT_EMAIL"
+
+  git config core.sshCommand "ssh -i $GBUP/remote.key"
 
   if [[ $GIT_REMOTE ]]; then
     git remote add origin $GIT_REMOTE
   fi
 
-
-# ----------------------------------------------
-# check for config.sh, create if needed
-# ----------------------------------------------
-if [ ! -f $GBUP/config.sh ]; then
-
-  cat >$GBUP/config.sh <<EOF
-HOME=$HOME
-GBUP=$GBUP
-GIT=$GIT
-TICKET=$TICKET
-
-WORK=$WORK
-DATA=$DATA
-
-exec {GIT_LOCK}>$GIT_LOCKFILE
-exec {TICKET_LOCK}>$TICKET_LOCKFILE
+  cat > $GIT/info/exclude <<EOF
+*.lock
+*.zip
+*.uploading
+*.tmp
+*.temp
 EOF
 
-fi
-
-
-# ----------------------------------------------
-# check script files, create if needed
-# ----------------------------------------------
-if [ ! -f $GBUP/monitor.sh ]; then
-  if [ ! -f ./_monitor.sh ]; then
-    echo "ERROR: missing _monitor.sh"
-    exit 1
-  fi
-
-  cat > $GBUP/monitor.sh <<EOF
-#!/bin/bash
-source $GBUP/config.sh
+  cat > $GIT/info/attributes <<EOF
+*.rm filter=lfs diff=lfs merge=lfs -text
+*.jpg filter=lfs diff=lfs merge=lfs -text
+*.pdf filter=lfs diff=lfs merge=lfs -text
+*.epub filter=lfs diff=lfs merge=lfs -text
 EOF
 
-  cat ./_monitor.sh >> $GBUP/monitor.sh
-  chmod +x $GBUP/monitor.sh
-fi
-
-if [ ! -f $GBUP/acp.sh ]; then
-
-  if [ ! -f ./_acp.sh ]; then
-    echo "ERROR: missing _acp.sh"
-    exit 1
-  fi
-
-  cat >$GBUP/acp.sh <<EOF
-#!/bin/bash
-source $GBUP/config.sh
-EOF
-
-  cat ./_acp.sh >> $GBUP/acp.sh
-  chmod +x $GBUP/acp.sh
 fi
 
 
