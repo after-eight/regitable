@@ -1,5 +1,5 @@
 SCRIPT=$(dirname $(realpath -s $0))
-source $SCRIPT/config.sh
+source $SCRIPT/config
 
 function git_commit() {
   uuid=$1

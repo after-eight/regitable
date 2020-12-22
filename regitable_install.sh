@@ -1,7 +1,7 @@
 #!/bin/bash
 
 SCRIPT=$(dirname $(realpath -s $0))
-source $SCRIPT/config.sh
+source $SCRIPT/config
 
 
 # ----------------------------------------------
