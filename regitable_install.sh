@@ -33,6 +33,21 @@ fi
 
 
 # ----------------------------------------------
+# check git-lfs package, install if needed
+# ----------------------------------------------
+[ ! -f /opt/bin/git-lfs ]; then
+  echo "Installing git-lfs...this may take a while..."
+  curl -s https://api.github.com/repos/git-lfs/git-lfs/releases/latest \
+  | grep "browser_download_url.*-arm-" \
+  | cut -d : -f 2,3 \
+  | tr -d \" \
+  | xargs curl -L --output $GBUP/git-lfs.tar.gz
+
+  tar -zxf $GBUP/git-lfs.tar.gz -C /opt/bin/ git-lfs
+  chmod +x /opt/bin/git-lfs
+
+  rm $GBUP/git-lfs.tar.gz
+fi
 
 
 # ----------------------------------------------
