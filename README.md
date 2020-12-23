@@ -1,21 +1,25 @@
 # reGitable - backup your reMarkable using git
 
-# [<img src="regitable.png"></p>](https://github.com/after-eight/regitable)
+# [<img src="perfectgit2.png"></p>](https://github.com/after-eight/regitable)
 
 ## Objective
 
 Most of my digital life is stored in a git repository, so the first thing i thought of when i examined my newly arrived reMarkable2 was: can i install and use git on it?
 
 The filesystem layout of the reMarkable meets the requirements for a git repository pretty well.
-Besides the binary `.rm` files, all other files are more or less json-formatted text files.
+Besides the binary `.rm` and `.jpg` files, all other files are more or less json-formatted text files.
 Plus, the filenames are immutable uuids, so even if you rename a notebook or move it from one folder to another, all that changes is the `parent` entry in the `.metadata` file.
-`.rm` files don't grow _that_ large, because it's one file per page.
-And even though they are binary: unless you do heavy cut-and-paste operations, their content changes in a way that git can handle efficiently.
+
+Even though the `.jpg` files are tiny, because they get compressed really hard and with low quality, and the `.rm` files don't grow _that_ large because they're one file per page, yet i decided to go the git-lfs route. The setup is a bit more complex, but most of the work is done by the install script anyways, and the result is absolutely worth it.
 
 By pushing changes to a remote repository instantly, i do not only have a backup of all my notebooks in the cloud.
-The repository contains all the back-versions of my files, and should i need to return to a long ago previous version of a file, or recover a deleted file, i can simply check it out of my repository and re-upload it onto my reMarkable.
+The repository contains all the back-versions of my files, and should i need to return to a long ago previous version of a file, or have to recover a deleted file, i can simply check it out of my repository and re-upload it onto my reMarkable.
 
 If you're a little paranoid like me, simply install a privately hosted GitLab instance, and all your files are completely under your control.
+
+Though git of course knows push as well as pull operations in all repositories, i use this solution as a "one way street" (aka backup).
+I only do pushes from the reMarkable, never pull.
+All other clients should only be used to pull, never push.
 
 
 <!-- ------------------------------------------------------------------- -->
@@ -25,14 +29,20 @@ If you're a little paranoid like me, simply install a privately hosted GitLab in
 
 ### Entware
 
-Before you can install and use reGitable, you have to install [reMarkable Entware](https://github.com/evidlo/remarkable_entware)!
+Before you can install and use reGitable, you have to install [reMarkable Entware](https://github.com/evidlo/remarkable_entware).
 
 The installation is very easy and straight forward, thanks to Evan Widloski at this point.
+
+### Git-LFS
+
+Unfortunately, the git-lfs package is not (yet) available via Entware.
+
+The reGitable installer comes bundled with the arm version of the git-lfs binary and will install it directly.
 
 
 ### Remote Repository
 
-Both GitHub and GitLab offer private repos for free, which is the easiest way to get started. Simply create a new repository (leave it empty, do not create a `README.md` file), upload the public ssh key that is created for you during the installation of reGitable, and you are ready to go.
+Both GitHub and GitLab offer private repos for free, which is the easiest way to get started. Simply create a new repository (leave it "blank", do not create a `README.md` file), upload the public ssh key that is created for you during the installation of reGitable, and you are ready to go.
 
 To increase privacy, you can use an on-premise GitLab installation.
 
@@ -42,16 +52,30 @@ To increase privacy, you can use an on-premise GitLab installation.
 
 ## Installation
 
-On your host machine, clone this repository:
+Clone this repository and copy the `.regitable` folder to your device:
+*Caution: the last command will overwrite the files on the device, should they already exist*
 
 ```
 git clone https://github.com/after-eight/regitable.git
 cd regitable
+scp -r .regitable/ root@10.11.99.1:
 ```
 
-Open the file `regitable_install.sh` in the editor of your choice and adjust the variables in the `personal` section to your liking. Leave the variables in the `environment` section as is, or adjust if needed.
+ssh into your device
 
-If you just want to track your files locally without pushing to a remote repository, simply set the `GIT_REMOTE` to an empty string.
+```
+ssh root@10.11.99.1
+
+cd ~/.regitable
+```
+
+
+### Edit config
+
+Open the `config` file with `nano` or in the editor of your choice and adjust the variables in the `personal` section to your liking.
+
+If you just want to track your files locally without pushing to a remote repository (yet), simply set the `GIT_REMOTE` to an empty string.
+You can add it anytime later.
 
 ```
 # ----------------------------------------------
@@ -59,71 +83,36 @@ If you just want to track your files locally without pushing to a remote reposit
 # ----------------------------------------------
 GIT_USER="my-name"
 GIT_EMAIL="my-email@my-domain.com"
-GIT_REMOTE="git@github.com:my-github-name/my-github-repo.git"
-
-# ----------------------------------------------
-# environment
-# ----------------------------------------------
-HOME="/home/root"
-WORK="$HOME/.local/share"
-DATA="$WORK/remarkable/xochitl"
-
-GBUP="$HOME/.regitable"
-GIT="$GBUP/.git"
-TICKET="$GBUP/ticket"
-
-SERVICE="regitable"
-
-GIT_LOCKFILE="$GBUP/git.lock"
-TICKET_LOCKFILE="$GBUP/ticket.lock"
+GIT_REMOTE="git@gitlab.com:my-gitlab-name/my-gitlab-repo.git"
 ```
 
 
-Connect your reMarkable via USB and copy the files to your device:
+### Run install script
+
+Start the installation like so
 
 ```
-scp regitable_install.sh root@10.11.99.1:
-scp _monitor.sh root@10.11.99.1:
-scp _acp.sh root@10.11.99.1:
+source ./config
+
+./install.sh
 ```
 
-Run the install script:
+To authenticate your reMarkable against a remote git repository, you have to copy-paste the public ssh key displayed at the end of the installation to your user profile on the server.
 
 ```
-ssh root@10.11.99.1 ./regitable_install.sh
+ssh-rsa AAAAB3NzaC1yc2EAA...
+                           ..........
+                                     ... root@reMarkable
 ```
 
-To authenticate your reMarkable against a remote git repository, you have to add the public ssh key displayed at the end of the installation to your user profile on the server.
-
-```
-ssh-rsa AAAAB3NzaC1yc2EAA.....
-```
-
-
-<!-- ------------------------------------------------------------------- -->
-
-
-## Usage
-
-To issue these commands, ssh into your device.
-
-
-### known_hosts
-
-If you want to use a remote server, eg GitHub, you have to populate the `known_hosts` file before you can push. Issue the command
-```
-ssh github.com
-```
-and confirm the signature/fingerprint.
-This has to be done only once, see explanation below in `Issues`.
+Go to your GitHub/GitLab user profile, to the "ssh keys" section, add a new key and paste inside the public key.
 
 
 ### First commit
 
-You should add and commit the "status quo" of your files like so:
+To add the status quo of your files to the repository, run:
 
 ```
-cd ~/.regitable
 git add -A .
 git commit -m "initial commit"
 ```
@@ -131,55 +120,107 @@ git commit -m "initial commit"
 If you have a remote configured and already uploaded your public ssh key:
 
 ```
-git push
+git push --set-upstream origin master
 ```
 
-
-### run via command line
-
-You can start the script by executing
-```
-./monitor.sh
-```
-Go ahead and edit some files, to watch the script do its work.
-When exiting the ssh session, the script will stop.
-So you should enable the script as a service, see below.
-
-
-### reload service files
-
-This is recommended after you installed/changed a service file.
-
-```
-systemctl daemon-reload
-```
+If this is the first time you connect to your remote from the reMarkable (which is likely), you have to confirm the fingerprint shown by the ssh client to save the host signature to your `known_hosts` file.
 
 
 ### Enable/disable the service
 
 ```
-systemctl enable regitable
-systemctl disable regitable
-```
-
-alternatively, enable _and_ start at once
-
-```
+systemctl daemon-reload
 systemctl enable --now regitable
 ```
 
-After you have enabled the service, it will start automatically on the next reboot.
-
-### Start/stop the service
-
-```
-systemctl start regitable
-systemctl stop regitable
-```
+This will start the service immediately, and on every reboot.
 
 
 <!-- ------------------------------------------------------------------- -->
 
+
+## Cloning
+
+Because the `.gitattributes` file is not part of the repository and not checked in (see the reason why in the `Issues` section below), you have to take special care when cloning the repository to your host machine.
+
+
+### git-lfs, part I
+
+Of course you need to have git-lfs installed. Follow the instructions for your platform here https://git-lfs.github.com/ to do so. At the end, run
+
+```
+git lfs install --local
+```
+
+### ssh key
+
+Make sure you have a public/private key pair to access the server from your host.
+You might use the same as the one stored on the reMarkable, but it's better practice to use a dedicated one:
+
+```
+ssh-keygen -b 4096
+```
+
+Copy the public key to the server, and store the private key locally under a name you like eg. ~/.ssh/me@remarkable2.
+
+If you have multiple projects on a server like github.com or gitlab.com and use different keys on each of them, the best way to distinguish between them is to create a separate entry in the config file like so:
+
+```
+Host remarkable2.gitlab.com
+  HostName gitlab.com
+	Port 22
+	User git
+	IdentityFile ~/.ssh/me@remarkable2
+	IdentitiesOnly yes
+```
+
+### clone, but *DO NOT* checkout yet
+
+Clone your repository, but do not checkout the files yet.
+To achieve this, use the `--no-checkout` switch.
+
+Replace the server-part of the ssh-url, that you got from GitHub/GitLab, with the one you created in the config file, eg
+
+```
+replace
+
+  git clone --no-checkout git@gitlab.com:...
+
+with
+
+  git clone --no-checkout git@remarkable2.gitlab.com:...
+```
+
+This way, git knows which ssh key to use.
+
+
+### git-lfs, part II
+
+Create a `.git/info/attributes` file inside the cloned repository and paste the following lines:
+
+```
+*.rm filter=lfs diff=lfs merge=lfs -text
+*.jpg filter=lfs diff=lfs merge=lfs -text
+*.pdf filter=lfs diff=lfs merge=lfs -text
+*.epub filter=lfs diff=lfs merge=lfs -text
+```
+
+
+### checkout / pull
+
+Now your repository is ready to be checked out:
+
+```
+git checkout master
+```
+
+and for future updates simply do
+
+```
+git pull
+```
+
+<!-- ------------------------------------------------------------------- -->
 
 ## Internals
 
@@ -215,21 +256,6 @@ git --git-dir="/home/root/.regitable/.git"  --work-tree="/home/root/.local/share
 ```
 
 
-### git --branch --set-upstream-to origin/master
-
-Before you can push to a remote repository, you have to
-
-- add a remote
-- specify the upstream
-
-A remote is added via the `git remote add` command, and has to be done in advance.
-As for the upstream, git requires you to specify it on your first push with the `--upstream` option. To avoid this, you can set it in advance using the `--set-upstream-to` option:
-
-```
-git branch --set-upstream-to origin/master
-```
-
-
 ### git and ssh (sshcommand)
 
 I had a hard time getting the dropbear ssh client, which is installed on the reMarkable, to work with my remote repository via ssh.
@@ -244,14 +270,12 @@ git config core.sshCommand "ssh -i $GBUP/remote.key"
 ### git lfs
 
 Unfortunately, `git-lfs` is not (yet) available via Entware.
-This would definitely help reduce the size of the local repository, by telling it to track `.rm` files.
+For your convenience, i bundled the arm version from their GitHub releases Page into this repository.
 
-As an experiment, i downloaded the arm-version of `git-lfs` and copied it to the reMarkable.
-This seems to work just fine.
-The downsides actually are the size of `git-lfs` itself (around 10 MB), and the fact that the `.gitattributes` file has to reside inside the work-tree, which i want to keep clean.
+Feel free to check for a more recent version from here: https://github.com/git-lfs/git-lfs/releases.
 
-In addition, my knowledge on how to identify and install dependencies needed by a package like git-lfs is very limited, so i decided to abandon this approach.
-Any help greatly appreciated.
+For the same reason as the `.git` folder, i did not want the `.gitattributes` file to be in the data directory.
+Though this means a little more work when cloning (once), to me it feels more solid.
 
 
 ### flock
@@ -309,37 +333,19 @@ Any help greatly appreciated.
 
 ## Issues / Caveats / Limitations
 
-### known_hosts
-
-Every ssh connection will validate the signature provided by the server against its entries in `known_hosts`, unless you suppress that behaviour (which i do not recommend).
-
-Unfortunately, the `ssh-keyscan` command is not available on the reMarkable, that would help getting the key in advance:
-```
-ssh-keyscan -t ecdsa gitlab.com
-```
-
-When connecting to a ssh server the first time, the signature is not available in the `known_hosts`.
-You have to manually confirm it.
-
-Whatever server you use, eg GitHub, just issue the command
-
-```
-ssh github.com
-```
-
-and confirm the signature.
-It's irrelevant if we do not yet have a valid ssh key to login, and wie didn't even specify a user.
-This is just to populate the `known_hosts` file.
-
 
 ### Memory
 
 The nature of git is to store a copy of every file that was ever committed forever, even if you delete it from the work directory.
 It does this in a compressed and efficient way, but still: over time, a git repository will grow and grow and grow.
-Plus the additionally needed packages from `entware`, `inotifywait` and of course `git` itself.
+Plus the additionally needed packages from `entware`, `inotifywait` and of course `git` and `git-lfs` themselves.
 
 Even though i experimented with the device quite excessively: created tons of notebooks, scribbled around, added and deleted pages, renamed, moved and trashed them, my repo size is still far below `40 MB`.
 The reMarkable is equipped with `8 GB` of storage, but only time can tell if there will be any memory shortages.
+
+With the help of `git-lfs` and a `git lfs prune` after every push, the storage needed for the copies of the binaries is a small as possible.
+
+But still: the memory of your reMarkable gets halved.
 
 
 ### Integration
@@ -364,6 +370,7 @@ To re-enable both, first run the `entware_reenable.sh` script, and the run `regi
 
 - [reMarkable.com](https://remarkable.com/)
 - [Awesome reMarkable](https://github.com/reHackable/awesome-reMarkable)
+- [Git-LFS](https://git-lfs.github.com/)
 - [reMarkable Entware](https://github.com/evidlo/remarkable_entware)
 - [reMarkable Wiki](https://remarkablewiki.com/start)
 - [r/RemarkableTablet on Reddit](https://www.reddit.com/r/RemarkableTablet/)
