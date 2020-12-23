@@ -1,4 +1,4 @@
 .history/
-.test/
-.temp/
-.user/
+test/
+temp/
+user/
