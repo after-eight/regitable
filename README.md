@@ -37,7 +37,7 @@ The installation is very easy and straight forward, thanks to Evan Widloski at t
 
 Unfortunately, the git-lfs package is not (yet) available via Entware.
 
-The reGitable install script will download the latest arm-release directly from their GitHub Site and install it for you.
+The reGitable installer comes bundled with the arm version of the git-lfs binary and will install it directly.
 
 
 ### Remote Repository
@@ -52,7 +52,7 @@ To increase privacy, you can use an on-premise GitLab installation.
 
 ## Installation
 
-Clone this repository and copy the `.remarkable` folder to your device:
+Clone this repository and copy the `.regitable` folder to your device:
 *Caution: the last command will overwrite the files on the device, should they already exist*
 
 ```
@@ -126,7 +126,7 @@ git push --set-upstream origin master
 If this is the first time you connect to your remote from the reMarkable (which is likely), you have to confirm the fingerprint shown by the ssh client to save the host signature to your `known_hosts` file.
 
 
-#### Enable/disable the service
+### Enable/disable the service
 
 ```
 systemctl daemon-reload
@@ -144,7 +144,7 @@ This will start the service immediately, and on every reboot.
 Because the `.gitattributes` file is not part of the repository and not checked in (see the reason why in the `Issues` section below), you have to take special care when cloning the repository to your host machine.
 
 
-#### git-lfs, part I
+### git-lfs, part I
 
 Of course you need to have git-lfs installed. Follow the instructions for your platform here https://git-lfs.github.com/ to do so. At the end, run
 
@@ -152,7 +152,7 @@ Of course you need to have git-lfs installed. Follow the instructions for your p
 git lfs install --local
 ```
 
-#### ssh key
+### ssh key
 
 Make sure you have a public/private key pair to access the server from your host.
 You might use the same as the one stored on the reMarkable, but it's better practice to use a dedicated one:
@@ -174,7 +174,7 @@ Host remarkable2.gitlab.com
 	IdentitiesOnly yes
 ```
 
-#### clone, but *DO NOT* checkout yet
+### clone, but *DO NOT* checkout yet
 
 Clone your repository, but do not checkout the files yet.
 To achieve this, use the `--no-checkout` switch.
@@ -194,7 +194,7 @@ with
 This way, git knows which ssh key to use.
 
 
-#### git-lfs, part II
+### git-lfs, part II
 
 Create a `.git/info/attributes` file inside the cloned repository and paste the following lines:
 
@@ -206,7 +206,7 @@ Create a `.git/info/attributes` file inside the cloned repository and paste the 
 ```
 
 
-#### checkout / pull
+### checkout / pull
 
 Now your repository is ready to be checked out:
 

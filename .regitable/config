@@ -1,0 +1,25 @@
+# ----------------------------------------------
+# personal
+# ----------------------------------------------
+GIT_USER="mlu"
+GIT_EMAIL="mischa@villa-lutz.de"
+GIT_REMOTE="git@gitlab.com:mischa.lutz/rm2lfs.git"
+
+# ----------------------------------------------
+# environment
+# ----------------------------------------------
+HOME="/home/root"
+WORK="$HOME/.local/share"
+DATA="$WORK/remarkable/xochitl"
+
+GBUP="$HOME/.regitable"
+GIT="$GBUP/.git"
+TICKET="$GBUP/ticket"
+
+SERVICE="regitable"
+
+GIT_LOCKFILE="$GBUP/git.lock"
+TICKET_LOCKFILE="$GBUP/ticket.lock"
+
+[[ ! $(echo $PATH | grep "/opt/bin") ]] && PATH=$PATH:/opt/bin
+export GIT_DIR="$GIT"
